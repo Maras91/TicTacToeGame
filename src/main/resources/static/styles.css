@@ -1,0 +1,51 @@
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+    color: white;
+}
+
+body {
+    display: table-cell;
+    vertical-align: middle;
+    background : black;
+}
+.h1 {
+    text-align: center;
+}
+.fields {
+        width: 900px;
+        height: 1000px;
+        margin: auto;
+        display: block;
+}
+.field {
+    width: 250px;
+    height: 250px;
+    display: inline-block;
+    margin: 5px;
+    background: white;
+    display: block;
+    float: left;
+}
+.field-o {
+    width: 250px;
+    height: 250px;
+    display: inline-block;
+    margin: 5px;
+    background: url(images/o.png);
+    display: block;
+    float: left;
+}
+.field-x {
+    width: 250px;
+    height: 250px;
+    display: inline-block;
+    margin: 5px;
+    background: url(images/x.png);
+    display: block;
+    float: left;
+}
