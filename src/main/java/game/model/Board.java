@@ -2,37 +2,57 @@ package game.model;
 
 import org.springframework.stereotype.Component;
 
+import java.util.*;
+
 @Component
 public class Board {
-    private String[][] board;
+    private Map<FieldState,HashSet<Field>> board;
     public Board() {
-        board = new String[3][3];
+        board = new HashMap<>();
+        board.put(FieldState.x,new HashSet<>());
+        board.put(FieldState.o,new HashSet<>());
     }
 
-    @Override
-    public String toString() {
-        return "Board:"+"\n"+
-                "["+board[0][0]+"]"+"["+board[0][1]+"]"+"["+board[0][2]+"]"+"\n"+
-                "["+board[1][0]+"]"+"["+board[1][1]+"]"+"["+board[1][2]+"]"+"\n"+
-                "["+board[2][0]+"]"+"["+board[2][1]+"]"+"["+board[2][2]+"]"+"\n";
-    }
-
-    public void addMove(int move, int playerId) {
+    public void addMove(int move, FieldState  player) {
         int xAxis;
         int yAxis;
+
         xAxis = move % 10;
         yAxis = move / 10;
 
+        Field field = new Field(xAxis,yAxis);
+        board.get(player).add(field);
+    }
+
+    public FieldState givePlayerFieldStatus (int playerId) {
         if (playerId==1) {
-            board[yAxis][xAxis] = "x";
+            return FieldState.x;
         } else {
-            board[yAxis][xAxis] = "o";
+            return FieldState.o;
         }
     }
 
-    private boolean checkWinCondition() {
+    public boolean checkWinCondition(FieldState player) {
+        HashSet<Field> playerFields = board.get(player);
+        for (int i=0; i<3; i++) {
+            int finalI = i;
+            if (playerFields.stream().filter(field -> field.getxAxis() == finalI).count()==3) {
+                return true;
+            }
+            if (playerFields.stream().filter(field -> field.getyAxis() == finalI).count()==3) {
+                return true;
+            }
+        }
+        if (playerFields.stream().filter(field -> field.getxAxis()==field.getyAxis()).count()==3) {
+            return true;
+        }
+        if (playerFields.stream().filter(field -> field.getyAxis()+field.getxAxis()==2).count()==3) {
+            return true;
+        }
         return false;
     }
 
-
+    public Map<FieldState, HashSet<Field>> getBoard() {
+        return board;
+    }
 }
