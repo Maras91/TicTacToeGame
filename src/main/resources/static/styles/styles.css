@@ -36,7 +36,7 @@ body {
     height: 250px;
     display: inline-block;
     margin: 5px;
-    background: url(images/o.png);
+    background: url(../images/o.png);
     display: block;
     float: left;
 }
@@ -45,7 +45,7 @@ body {
     height: 250px;
     display: inline-block;
     margin: 5px;
-    background: url(images/x.png);
+    background: url(../images/x.png);
     display: block;
     float: left;
 }
