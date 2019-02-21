@@ -14,8 +14,7 @@ function put (move)
         $('#'+move).removeClass('field').addClass('field-x');
     }
     var playerId=clickCounter%2;
-    var url = "http://localhost:8080/home?move="+move+"&playerId="+playerId;
+    var url = "http://localhost:8080/clickevent?move="+move+"&playerId="+playerId;
     Http.open("GET",url);
     Http.send();
-
 }
