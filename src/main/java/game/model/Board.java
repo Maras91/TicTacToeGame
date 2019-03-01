@@ -51,7 +51,11 @@ public class Board {
         }
         return false;
     }
-
+    public void clearMoves() {
+        board.clear();
+        board.put(FieldState.x,new HashSet<>());
+        board.put(FieldState.o,new HashSet<>());
+    }
     public Map<FieldState, HashSet<Field>> getBoard() {
         return board;
     }

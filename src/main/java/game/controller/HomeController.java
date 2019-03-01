@@ -13,7 +13,10 @@ public class HomeController {
     @Autowired
     private Board board;
 
-    public HomeController() {
+    @GetMapping("/")
+    public String index(){
+        board.clearMoves();
+        return "indexView";
     }
 
     @GetMapping("/clickevent")
@@ -22,8 +25,7 @@ public class HomeController {
         board.addMove(move, fieldState);
         if (board.checkWinCondition(fieldState)) {
             System.out.println("Player '"+fieldState+"' win!!!");
-            model.addAttribute("player",fieldState);
-            return "winView";
+            model.addAttribute("winPlayer",fieldState);
         }
         return "indexView";
     }
