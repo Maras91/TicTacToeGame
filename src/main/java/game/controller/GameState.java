@@ -1,19 +1,24 @@
-package game.model;
+package game.controller;
 
+import game.model.Field;
+import game.model.Player;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 @Component
-public class Board {
-    private Map<FieldState,HashSet<Field>> board;
-    public Board() {
+public class GameState {
+    private Map<Player,HashSet<Field>> board;
+    private Player whichPlayerWon;
+    private boolean playerWin;
+    public GameState() {
         board = new HashMap<>();
-        board.put(FieldState.x,new HashSet<>());
-        board.put(FieldState.o,new HashSet<>());
+        playerWin = false;
+        board.put(Player.x,new HashSet<>());
+        board.put(Player.o,new HashSet<>());
     }
 
-    public void addMove(int move, FieldState  player) {
+    public void addMove(int move, Player player) {
         int xAxis;
         int yAxis;
 
@@ -22,17 +27,21 @@ public class Board {
 
         Field field = new Field(xAxis,yAxis);
         board.get(player).add(field);
-    }
-
-    public FieldState givePlayerFieldStatus (int playerId) {
-        if (playerId==1) {
-            return FieldState.x;
-        } else {
-            return FieldState.o;
+        if (checkWinCondition(player)) {
+            playerWin = true;
+            whichPlayerWon = player;
         }
     }
 
-    public boolean checkWinCondition(FieldState player) {
+    public Player givePlayerFieldStatus (int playerId) {
+        if (playerId==1) {
+            return Player.x;
+        } else {
+            return Player.o;
+        }
+    }
+
+    private boolean checkWinCondition(Player player) {
         HashSet<Field> playerFields = board.get(player);
         for (int i=0; i<3; i++) {
             int finalI = i;
@@ -52,11 +61,20 @@ public class Board {
         return false;
     }
     public void clearMoves() {
+        playerWin = false;
         board.clear();
-        board.put(FieldState.x,new HashSet<>());
-        board.put(FieldState.o,new HashSet<>());
+        board.put(Player.x,new HashSet<>());
+        board.put(Player.o,new HashSet<>());
     }
-    public Map<FieldState, HashSet<Field>> getBoard() {
+    public Map<Player, HashSet<Field>> getBoard() {
         return board;
+    }
+
+    public boolean isPlayerWin() {
+        return playerWin;
+    }
+
+    public Player getWhichPlayerWon() {
+        return whichPlayerWon;
     }
 }

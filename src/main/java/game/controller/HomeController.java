@@ -1,7 +1,6 @@
 package game.controller;
 
-import game.model.Board;
-import game.model.FieldState;
+import game.model.Player;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,22 +10,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
     @Autowired
-    private Board board;
+    private GameState gameState;
 
     @GetMapping("/")
-    public String index(){
-        board.clearMoves();
+    public String index( Model model){
+        gameState.clearMoves();
+        model.addAttribute("isPlayerWin",gameState.isPlayerWin());
         return "indexView";
     }
 
     @GetMapping("/clickevent")
     public String clickEvent(@RequestParam int move, int playerId, Model model) {
-        FieldState fieldState = board.givePlayerFieldStatus(playerId);
-        board.addMove(move, fieldState);
-        if (board.checkWinCondition(fieldState)) {
-            System.out.println("Player '"+fieldState+"' win!!!");
-            model.addAttribute("winPlayer",fieldState);
+        Player player = gameState.givePlayerFieldStatus(playerId);
+        gameState.addMove(move, player);
+        if (gameState.isPlayerWin()) {
+            System.out.println("Player '"+ player +"' win!!!");
+            model.addAttribute("winPlayer", gameState.getWhichPlayerWon());
         }
+        model.addAttribute("isPlayerWin",gameState.isPlayerWin());
         return "indexView";
     }
 

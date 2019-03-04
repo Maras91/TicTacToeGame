@@ -1,6 +1,6 @@
 package game.model;
 
-public enum FieldState {
+public enum Player {
     x,
     o
 }
