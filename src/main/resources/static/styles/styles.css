@@ -20,14 +20,14 @@ h2 {
     text-align: center;
 }
 .fields {
-        width: 900px;
-        height: 1000px;
+        width: 650px;
+        height: 650px;
         margin: auto;
         display: block;
 }
 .field {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     display: inline-block;
     margin: 5px;
     background: white;
@@ -35,8 +35,8 @@ h2 {
     float: left;
 }
 .field-o {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     display: inline-block;
     margin: 5px;
     background: url(../images/o.png);
@@ -44,11 +44,19 @@ h2 {
     float: left;
 }
 .field-x {
-    width: 250px;
-    height: 250px;
+    width: 200px;
+    height: 200px;
     display: inline-block;
     margin: 5px;
     background: url(../images/x.png);
     display: block;
     float: left;
+}
+#reset {
+   width: 110px;
+   height: 30px;
+   margin: 5px;
+   background: gray;
+   text-align: center;
+   font-size: 25px;
 }

@@ -1,12 +1,14 @@
 var clickCounter=0;
 const Http = new XMLHttpRequest();
+var allFields = $('.fields').html();
 $('.field').click(function() {
     put (this.id);
 });
+$('#reset').click(function() {
+     restart();
+});
 
-
-function put (move)
-{
+function put (move) {
     clickCounter++;
     var playerId=clickCounter%2;
     $.post( "/clickevent",{move:move,playerId:playerId},function( response ) {
@@ -38,4 +40,11 @@ function put (move)
             }
         }
     }
+}
+function restart() {
+    $.post("/restart");
+    $('.fields').html(allFields);
+    $('.field').click(function() {
+        put (this.id);
+    });
 }

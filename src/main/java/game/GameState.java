@@ -1,4 +1,4 @@
-package game.model;
+package game;
 
 import game.model.Field;
 import game.model.Player;
