@@ -1,4 +1,3 @@
-var clickCounter=0;
 const Http = new XMLHttpRequest();
 var allFields = $('.fields').html();
 $('.field').click(function() {
@@ -9,9 +8,8 @@ $('#reset').click(function() {
 });
 
 function put (move) {
-    clickCounter++;
-    var playerId=clickCounter%2;
-    $.post( "/clickevent",{move:move,playerId:playerId},function( response ) {
+
+    $.post( "/clickevent",{move:move},function( response ) {
     var jsonResponse = JSON.parse(response)
     var isWin = jsonResponse.playerWin;
     var playerWin = jsonResponse.whichPlayerWon;
