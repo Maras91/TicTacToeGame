@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class playerSwitchConfig {
+public class PlayerSwitchConfig {
     @Bean
     public PlayerSwitcher playerChanger() {
         return new PlayerSwitcher(Player.x);

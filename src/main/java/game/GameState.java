@@ -18,30 +18,19 @@ public class GameState {
         board.put(Player.o,new HashSet<>());
     }
 
-    public void addMove(int move, Player player) {
-        int xAxis;
-        int yAxis;
-
-        xAxis = move % 10;
-        yAxis = move / 10;
-
-        Field field = new Field(xAxis,yAxis);
+    public void addMove(Field field, Player player) {
         board.get(player).add(field);
-        if (checkWinCondition(player)) {
+        checkWinCondition(player);
+    }
+
+    private void checkWinCondition (Player player) {
+        if (isPlayerWin(player)) {
             playerWin = true;
             whichPlayerWon = player;
         }
     }
 
-    public Player givePlayerFieldStatus (int playerId) {
-        if (playerId==1) {
-            return Player.x;
-        } else {
-            return Player.o;
-        }
-    }
-
-    private boolean checkWinCondition(Player player) {
+    private boolean isPlayerWin(Player player) {
         HashSet<Field> playerFields = board.get(player);
         for (int i=0; i<3; i++) {
             int finalI = i;
