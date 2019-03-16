@@ -13,14 +13,20 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class MoveController {
 
-    @Autowired
     private GameState gameState;
 
-    @Autowired
     private PlayerSwitcher playerSwitcher;
 
-    @Autowired
     private Computer computer;
+
+    @Autowired
+    public MoveController(GameState gameState, PlayerSwitcher playerSwitcher, Computer computer) {
+        this.gameState = gameState;
+        this.playerSwitcher = playerSwitcher;
+        this.computer = computer;
+    }
+
+
 
     @PostMapping("/clickevent")
     public String clickEvent(@RequestParam int move) throws JsonProcessingException {
