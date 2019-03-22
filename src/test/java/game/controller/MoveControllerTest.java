@@ -2,10 +2,11 @@ package game.controller;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import game.GameState;
-import game.model.Field;
-import game.service.Computer;
-import game.service.PlayerSwitcher;
+import game.BoardState;
+import game.model.Game;
+import game.service.ComputerService;
+import game.service.GameService;
+import game.service.HumanService;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
@@ -13,22 +14,21 @@ import static org.mockito.Mockito.*;
 
 public class MoveControllerTest {
 
-
-
-
     @Test
     public void clickEventTest() throws JsonProcessingException {
 
         //given
-        GameState gameState = mock(GameState.class);
-        PlayerSwitcher playerSwitcher = mock(PlayerSwitcher.class);
-        Computer computer = mock(Computer.class);
-        MoveController moveController = new MoveController(gameState,playerSwitcher,computer);
+        ComputerService computerService = new ComputerService();
+        HumanService humanService = new HumanService();
+        BoardState boardState = new BoardState();
+        Game game = new Game(computerService,humanService, boardState);
+        GameService gameService = spy(new GameService(game));
+        MoveController moveController = new MoveController(gameService);
         //when
         moveController.clickEvent(11);
         //then
-        verify(gameState).addMove(new Field(1,1),null);
-        verify(playerSwitcher,atLeast(1)).switchPlayer();
+        verify(gameService).addPlayerMove(11);
+        verify(gameService).addComputerMove();
     }
 
 }

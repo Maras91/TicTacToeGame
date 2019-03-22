@@ -1,6 +1,6 @@
 package game.model;
 
-public enum Player {
+public enum PlayerMark {
     x,
     o
 }

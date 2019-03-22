@@ -10,10 +10,6 @@ public class Field {
         this.xAxis = xAxis;
         this.yAxis = yAxis;
     }
-    public Field(int move) {
-        xAxis = move % 10;
-        yAxis = move / 10;
-    }
 
     @Override
     public boolean equals(Object o) {

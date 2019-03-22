@@ -1,53 +1,46 @@
 package game.service;
 
-import game.GameState;
+import game.BoardState;
 import game.model.Field;
-import game.model.Player;
+import game.model.PlayerMark;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Random;
 
 @Service
-public class Computer {
+public class ComputerService {
 
-    public GameState makeMove(GameState gameState, Player player) {
-        Player opponent;
-        if (player==Player.x) {
-            opponent=Player.o;
+    private final PlayerMark MYMARK = PlayerMark.o;
+
+    public Field makeMove(BoardState boardState) {
+        PlayerMark opponent;
+        if (getMYMARK() ==PlayerMark.x) {
+            opponent=PlayerMark.o;
         }else {
-            opponent=Player.x;
+            opponent=PlayerMark.x;
         }
-        HashSet<Field> opponentMoves = gameState.getBoard().get(opponent);
-        HashSet<Field> myMoves = gameState.getBoard().get(player);
+        HashSet<Field> opponentMoves = boardState.getBoard().get(opponent);
+        HashSet<Field> myMoves = boardState.getBoard().get(getMYMARK());
         HashSet<Field> allMoves = new HashSet<>();
         allMoves.addAll(opponentMoves);
         allMoves.addAll(myMoves);
         if (allMoves.size()>=9) {
-            return gameState;
+            return new Field(-1,-1);
         }
-
         Field fieldToAdd = new Field(1,1);
         if (allMoves.add(fieldToAdd)) {
-            gameState.addMove(fieldToAdd,player);
-            return gameState;
+            return fieldToAdd;
         }
-
         fieldToAdd = obviousMove(myMoves,allMoves);
         if (!fieldToAdd.equals(new Field(-1,-1))) {
-            gameState.addMove(fieldToAdd,player);
-            return gameState;
+            return fieldToAdd;
         }
         fieldToAdd = obviousMove(opponentMoves,allMoves);
         if (!fieldToAdd.equals(new Field(-1,-1))) {
-            gameState.addMove(fieldToAdd,player);
-            return gameState;
+           return fieldToAdd;
         }
-
-        fieldToAdd = getRandomField(allMoves);
-        gameState.addMove(fieldToAdd,player);
-        return gameState;
-
+        return getRandomField(allMoves);
     }
 
     private Field obviousMove(HashSet<Field> PlayerMoves, HashSet<Field> allMoves) {
@@ -98,5 +91,9 @@ public class Computer {
             randomField = new Field(randomNumber.nextInt(3),randomNumber.nextInt(3));
         } while (!makeMoves.add(randomField));
          return randomField;
+    }
+
+    public PlayerMark getMYMARK() {
+        return MYMARK;
     }
 }
